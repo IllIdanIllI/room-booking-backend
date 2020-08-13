@@ -22,13 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EntityMapper<Employee, EmployeeRequestDto> requestMapper;
 
     @Override
-    public EmployeeResponseDto findEmployee(int id) {
+    public EmployeeResponseDto findModel(Integer id) {
         Optional<Employee> employee = repository.findById(id);
         return responseMapper.map(employee.orElseThrow(() -> new NoSuchRecordException("No such employee")));
     }
 
     @Override
-    public Integer addEmployee(EmployeeRequestDto dto) {
+    public Integer addModel(EmployeeRequestDto dto) {
         Employee employee = requestMapper.map(dto);
         repository.save(employee);
         return Optional.ofNullable(employee.getId()).orElseThrow();

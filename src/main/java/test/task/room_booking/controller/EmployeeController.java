@@ -19,14 +19,14 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseEntity<EmployeeResponseDto> addEmployee(@RequestParam int id) {
-        EmployeeResponseDto employee = service.findEmployee(id);
+        EmployeeResponseDto employee = service.findModel(id);
         return ResponseEntity.ok(employee);
     }
 
     @PostMapping
     public ResponseEntity addEmployee(@RequestBody EmployeeRequestDto dto,
                                       UriComponentsBuilder uriBuilder) {
-        Integer id = service.addEmployee(dto);
+        Integer id = service.addModel(dto);
         URI uri = uriBuilder.path("/employee/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }

@@ -1,4 +1,4 @@
-package test.task.room_booking.repositity.exception;
+package test.task.room_booking.repository.exception;
 
 public class IncorrectEnumValueException extends RuntimeException {
     public IncorrectEnumValueException() {

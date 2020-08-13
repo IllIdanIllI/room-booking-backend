@@ -1,7 +1,8 @@
-package test.task.room_booking.repositity.model;
+package test.task.room_booking.repository.model;
 
 import lombok.*;
-import test.task.room_booking.repositity.model.type.EmployeeType;
+import org.hibernate.annotations.Type;
+import test.task.room_booking.repository.model.type.EmployeeType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,5 +28,7 @@ public class Employee implements Serializable {
     private String lastName;
 
     @Column
+    @Enumerated(EnumType.STRING)
+    @Type(type = "test.task.room_booking.repository.converter.EmployeeTypeConverter")
     private EmployeeType type;
 }

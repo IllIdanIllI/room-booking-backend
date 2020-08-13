@@ -1,6 +1,6 @@
-package test.task.room_booking.repositity.model.type;
+package test.task.room_booking.repository.model.type;
 
-import test.task.room_booking.repositity.exception.IncorrectEnumValueException;
+import test.task.room_booking.repository.exception.IncorrectEnumValueException;
 
 import java.util.Arrays;
 

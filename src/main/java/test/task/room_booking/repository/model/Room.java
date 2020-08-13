@@ -1,4 +1,4 @@
-package test.task.room_booking.repositity.model;
+package test.task.room_booking.repository.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

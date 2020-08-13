@@ -1,8 +1,8 @@
 package test.task.room_booking.service.mapper.employee;
 
 import org.springframework.stereotype.Component;
-import test.task.room_booking.repositity.model.Employee;
-import test.task.room_booking.repositity.model.type.EmployeeType;
+import test.task.room_booking.repository.model.Employee;
+import test.task.room_booking.repository.model.type.EmployeeType;
 import test.task.room_booking.service.dto.request.EmployeeRequestDto;
 import test.task.room_booking.service.mapper.EntityMapper;
 

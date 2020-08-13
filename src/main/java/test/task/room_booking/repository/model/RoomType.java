@@ -1,9 +1,11 @@
-package test.task.room_booking.repositity.model;
+package test.task.room_booking.repository.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import test.task.room_booking.repository.model.type.RoomTypeName;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,5 +25,7 @@ public class RoomType implements Serializable {
     private Integer id;
 
     @Column
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Type(type = "test.task.room_booking.repository.converter.RoomTypeNameConverter")
+    private RoomTypeName name;
 }

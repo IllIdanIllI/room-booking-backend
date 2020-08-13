@@ -24,6 +24,6 @@ public enum EmployeeType {
         return Arrays.stream(EmployeeType.values())
                 .filter(enumType -> enumType.get().equalsIgnoreCase(type))
                 .findFirst()
-                .orElseThrow(() -> new IncorrectEnumValueException("Such value do not exist in EmployeeType enum: " + type));
+                .orElseThrow(() -> new IncorrectEnumValueException("This incorrect employee type : \'" + type + "\' - please choose a right one."));
     }
 }

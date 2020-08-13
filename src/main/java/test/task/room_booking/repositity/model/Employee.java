@@ -6,6 +6,8 @@ import test.task.room_booking.repositity.model.type.EmployeeType;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
 @Entity

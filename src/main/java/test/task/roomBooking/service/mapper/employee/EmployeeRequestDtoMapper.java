@@ -8,6 +8,7 @@ import test.task.roomBooking.service.mapper.EntityMapper;
 
 @Component
 public class EmployeeRequestDtoMapper extends EntityMapper<Employee, EmployeeRequestDto> {
+
     @Override
     public Employee map(EmployeeRequestDto objectToMap) {
         return Employee.builder()

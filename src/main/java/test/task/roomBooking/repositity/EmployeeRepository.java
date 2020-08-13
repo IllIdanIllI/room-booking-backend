@@ -6,5 +6,5 @@ public interface EmployeeRepository {
 
     Employee findEmployee(int id);
 
-    int addEmployee(Employee dto);
+    Integer addEmployee(Employee dto);
 }

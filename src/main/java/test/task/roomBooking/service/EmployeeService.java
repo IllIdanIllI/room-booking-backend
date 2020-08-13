@@ -7,5 +7,5 @@ public interface EmployeeService {
 
     EmployeeResponseDto findEmployee(int id);
 
-    int addEmployee(EmployeeRequestDto dto);
+    Integer addEmployee(EmployeeRequestDto dto);
 }

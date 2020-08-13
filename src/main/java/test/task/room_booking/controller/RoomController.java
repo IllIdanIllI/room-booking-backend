@@ -11,12 +11,13 @@ import test.task.room_booking.service.dto.response.RoomResponseDto;
 import java.net.URI;
 
 @RestController
+@RequestMapping("/room")
 public class RoomController {
     @Autowired
     private RoomService service;
 
-    @GetMapping
-    public ResponseEntity<RoomResponseDto> addEmployee(@RequestParam int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<RoomResponseDto> findRoom(@PathVariable int id) {
         RoomResponseDto room = service.findModel(id);
         return ResponseEntity.ok(room);
     }

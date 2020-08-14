@@ -11,7 +11,7 @@ import test.task.room_booking.service.dto.response.EmployeeResponseDto;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 public class EmployeeController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class EmployeeController {
     public ResponseEntity addEmployee(@RequestBody EmployeeRequestDto dto,
                                       UriComponentsBuilder uriBuilder) {
         Integer id = service.addModel(dto);
-        URI uri = uriBuilder.path("/employee/{id}").buildAndExpand(id).toUri();
+        URI uri = uriBuilder.path("/employees/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 }

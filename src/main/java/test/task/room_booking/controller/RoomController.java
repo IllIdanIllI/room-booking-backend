@@ -1,6 +1,7 @@
 package test.task.room_booking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -11,10 +12,18 @@ import test.task.room_booking.service.dto.response.RoomResponseDto;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/room")
+@RequestMapping("/rooms")
 public class RoomController {
     @Autowired
     private RoomService service;
+
+    @GetMapping
+    public ResponseEntity<Page<RoomResponseDto>> findRooms(@RequestParam int currentPage,
+                                                           @RequestParam int recordAmount) {
+        Page<RoomResponseDto> allPages = service.findAllModels(currentPage, recordAmount);
+        return ResponseEntity.ok(allPages);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<RoomResponseDto> findRoom(@PathVariable int id) {

@@ -1,6 +1,7 @@
 package test.task.room_booking.service.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import test.task.room_booking.repository.EmployeeRepository;
 import test.task.room_booking.repository.model.Employee;
@@ -25,6 +26,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponseDto findModel(Integer id) {
         Optional<Employee> employee = repository.findById(id);
         return responseMapper.map(employee.orElseThrow(() -> new NoSuchRecordException("No such employee")));
+    }
+
+    @Override
+    public Page<EmployeeResponseDto> findAllModels(int currentPage, int recordAmount) {
+        return null;
     }
 
     @Override

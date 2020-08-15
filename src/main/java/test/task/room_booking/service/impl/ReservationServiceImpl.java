@@ -30,6 +30,9 @@ public class ReservationServiceImpl implements ReservationService {
     public Integer reserveRoom(ReservationRequestDto dto) {
         LocalDateTime dateIn = formatter.receiveFormattedDate(dto.getDateIn());
         LocalDateTime dateOut = formatter.receiveFormattedDate(dto.getDateOut());
+        if (dateIn.isAfter(dateOut)){
+            throw new ReservationProcessingException("Date in is bigger than date out");
+        }
         List<Reservation> reservations = repository
                 .findAppropriateReservation(LocalDateTime.now(), dto.getRoomId());
         Optional<Reservation> conflictReservation = reservations.stream()

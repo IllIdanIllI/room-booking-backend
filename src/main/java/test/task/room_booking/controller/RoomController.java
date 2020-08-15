@@ -13,8 +13,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
 
+import static test.task.room_booking.constant.UrlConstant.PATH_ID_URL;
+import static test.task.room_booking.constant.UrlConstant.ROOMS_URL;
+
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping(ROOMS_URL)
 public class RoomController {
 
     @Autowired
@@ -28,7 +31,7 @@ public class RoomController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping(PATH_ID_URL)
     public ResponseEntity<RoomResponseDto> findRoom(@PathVariable @NotNull Integer id) {
         RoomResponseDto room = service.findModel(id);
         return ResponseEntity.ok(room);
@@ -38,7 +41,7 @@ public class RoomController {
     public ResponseEntity addRoom(@Valid @RequestBody RoomRequestDto dto,
                                   UriComponentsBuilder uriBuilder) {
         Integer id = service.addModel(dto);
-        URI uri = uriBuilder.path("/room/{id}").buildAndExpand(id).toUri();
+        URI uri = uriBuilder.path(ROOMS_URL + PATH_ID_URL).buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 }

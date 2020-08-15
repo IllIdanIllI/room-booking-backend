@@ -11,9 +11,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
 
+import static test.task.room_booking.constant.UrlConstant.*;
+
 @RestController
-@RequestMapping("/reservations")
+@RequestMapping(RESERVATIONS_URL)
 public class ReservationController {
+
 
     @Autowired
     private ReservationService service;
@@ -22,12 +25,12 @@ public class ReservationController {
     public ResponseEntity reserveRoom(@Valid @RequestBody ReservationRequestDto dto,
                                       UriComponentsBuilder uriBuilder) {
         Integer id = service.reserveRoom(dto);
-        URI uri = uriBuilder.path("/reservations/{id}").buildAndExpand(id).toUri();
+        URI uri = uriBuilder.path(RESERVATIONS_URL + PATH_ID_URL).buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/{id}/stop")
-    public ResponseEntity stopReservation(@PathVariable @NotNull Integer id){
+    @GetMapping(PATH_ID_URL + STOP_URL)
+    public ResponseEntity stopReservation(@PathVariable @NotNull Integer id) {
         service.stopReservation(id);
         return ResponseEntity.ok("Reservation has been stopped");
     }

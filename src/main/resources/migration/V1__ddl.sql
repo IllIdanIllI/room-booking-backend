@@ -5,7 +5,7 @@
 -- Dumped from database version 11.5
 -- Dumped by pg_dump version 11.5
 
--- Started on 2020-08-13 19:05:41
+-- Started on 2020-08-15 14:45:08
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -99,7 +99,6 @@ CREATE TABLE public.reservation (
     id integer NOT NULL,
     date_in timestamp without time zone NOT NULL,
     date_out timestamp without time zone NOT NULL,
-    reserved boolean NOT NULL,
     employee_id integer NOT NULL,
     reservation_reason_id integer NOT NULL,
     room_id integer NOT NULL
@@ -275,6 +274,7 @@ ALTER TABLE ONLY public.room_type ALTER COLUMN id SET DEFAULT nextval('public.ro
 --
 
 COPY public.employee (id, first_name, last_name, type) FROM stdin;
+1	first                                             	last                                                        	doctor
 \.
 
 
@@ -284,7 +284,9 @@ COPY public.employee (id, first_name, last_name, type) FROM stdin;
 -- Data for Name: reservation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.reservation (id, date_in, date_out, reserved, employee_id, reservation_reason_id, room_id) FROM stdin;
+COPY public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) FROM stdin;
+1	2020-08-14 20:00:00	2020-08-14 21:00:00	1	2	3
+5	2020-08-15 20:00:00	2020-08-15 21:00:00	1	2	3
 \.
 
 
@@ -295,6 +297,7 @@ COPY public.reservation (id, date_in, date_out, reserved, employee_id, reservati
 --
 
 COPY public.reservation_reason (id, name, description) FROM stdin;
+2	Therapy                                                     	\N
 \.
 
 
@@ -305,6 +308,13 @@ COPY public.reservation_reason (id, name, description) FROM stdin;
 --
 
 COPY public.room (id, number, room_type_id) FROM stdin;
+3	100	2
+4	101	3
+5	102	4
+6	103	5
+7	104	6
+8	105	7
+9	106	8
 \.
 
 
@@ -315,6 +325,13 @@ COPY public.room (id, number, room_type_id) FROM stdin;
 --
 
 COPY public.room_type (id, name) FROM stdin;
+2	Treatment room
+3	Treatment room
+4	Treatment room
+5	Intensive care room
+6	Intensive care room
+7	Reception room
+8	Reception room
 \.
 
 
@@ -324,7 +341,7 @@ COPY public.room_type (id, name) FROM stdin;
 -- Name: employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.employee_id_seq', 1, false);
+SELECT pg_catalog.setval('public.employee_id_seq', 3, true);
 
 
 --
@@ -333,7 +350,7 @@ SELECT pg_catalog.setval('public.employee_id_seq', 1, false);
 -- Name: reservation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.reservation_id_seq', 1, false);
+SELECT pg_catalog.setval('public.reservation_id_seq', 5, true);
 
 
 --
@@ -342,7 +359,7 @@ SELECT pg_catalog.setval('public.reservation_id_seq', 1, false);
 -- Name: reservation_reason_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.reservation_reason_id_seq', 1, false);
+SELECT pg_catalog.setval('public.reservation_reason_id_seq', 2, true);
 
 
 --
@@ -351,7 +368,7 @@ SELECT pg_catalog.setval('public.reservation_reason_id_seq', 1, false);
 -- Name: room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.room_id_seq', 1, false);
+SELECT pg_catalog.setval('public.room_id_seq', 9, true);
 
 
 --
@@ -360,7 +377,7 @@ SELECT pg_catalog.setval('public.room_id_seq', 1, false);
 -- Name: room_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.room_type_id_seq', 1, false);
+SELECT pg_catalog.setval('public.room_type_id_seq', 8, true);
 
 
 --
@@ -444,7 +461,7 @@ ALTER TABLE ONLY public.room
     ADD CONSTRAINT room_type_id FOREIGN KEY (room_type_id) REFERENCES public.room_type(id);
 
 
--- Completed on 2020-08-13 19:05:41
+-- Completed on 2020-08-15 14:45:09
 
 --
 -- PostgreSQL database dump complete

@@ -7,6 +7,7 @@ import test.task.room_booking.repository.ReservationRepository;
 import test.task.room_booking.repository.model.Reservation;
 import test.task.room_booking.service.ReservationService;
 import test.task.room_booking.service.dto.request.ReservationRequestDto;
+import test.task.room_booking.service.exception.ReservationProcessingException;
 import test.task.room_booking.service.format.FormatHandler;
 import test.task.room_booking.service.mapper.EntityMapper;
 
@@ -38,16 +39,30 @@ public class ReservationServiceImpl implements ReservationService {
                         && dateOut.isAfter(res.getDateOut()))
                 .findFirst();
         if (conflictReservation.isPresent() && !reservations.isEmpty()) {
-            throw new RuntimeException("This time has already booked");
+            throw new ReservationProcessingException("This time has already booked");
         } else {
-            Reservation reservation = requestMapper.map(dto);
-            repository.save(reservation);
-            Integer id = reservation.getId();
-            if (id == null) {
-                throw new RuntimeException("Smth went wrong");
-            } else {
-                return id;
-            }
+            return setUpReservation(dto);
         }
+    }
+
+    private Integer setUpReservation(ReservationRequestDto dto) {
+        Reservation reservation = requestMapper.map(dto);
+        repository.save(reservation);
+        Integer id = reservation.getId();
+        if (id == null) {
+            throw new ReservationProcessingException("Smth went wrong");
+        } else {
+            return id;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void stopReservation(Integer reservationId) {
+        Optional<Reservation> optionalReservation = repository.findById(reservationId);
+        Reservation reservation = optionalReservation
+                .orElseThrow(() -> new ReservationProcessingException("Such reservation do not exist"));
+        reservation.setDateOut(LocalDateTime.now());
+        repository.save(reservation);
     }
 }

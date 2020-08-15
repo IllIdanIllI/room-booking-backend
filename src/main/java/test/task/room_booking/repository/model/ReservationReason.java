@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Builder
 @Data
 @Entity
-@Table(name = "reservation_reason_reason")
+@Table(name = "reservation_reason")
 public class ReservationReason implements Serializable {
 
     @Id

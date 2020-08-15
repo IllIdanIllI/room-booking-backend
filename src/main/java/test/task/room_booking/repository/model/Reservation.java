@@ -29,10 +29,7 @@ public class Reservation implements Serializable {
     @Column(name = "date_out")
     private LocalDateTime dateOut;
 
-    @Column
-    private boolean reserved;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "reservation_reason_id")
     private ReservationReason reservationReason;
 

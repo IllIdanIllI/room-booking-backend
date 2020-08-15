@@ -2,27 +2,52 @@ package test.task.room_booking.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.task.room_booking.repository.RoomRepository;
+import org.springframework.transaction.annotation.Transactional;
+import test.task.room_booking.repository.ReservationRepository;
+import test.task.room_booking.repository.model.Reservation;
 import test.task.room_booking.service.ReservationService;
 import test.task.room_booking.service.dto.request.ReservationRequestDto;
+import test.task.room_booking.service.format.FormatHandler;
+import test.task.room_booking.service.mapper.EntityMapper;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
+
     @Autowired
-    private RoomRepository roomRepository;
+    private ReservationRepository repository;
     @Autowired
-    private ReservationService service;
+    private FormatHandler<LocalDateTime> formatter;
+    @Autowired
+    private EntityMapper<Reservation, ReservationRequestDto> requestMapper;
 
     @Override
-    public void reserveRoom(ReservationRequestDto dto) {
-//        Boolean reserved = roomRepository.findReserveStatusById(dto.getRoomId());
-//        Optional<Room> room = roomRepository.findById(dto.getRoomId());
-//        LocalDateTime currentTime = LocalDateTime.now();
-//        currentTime.isBefore()
-//        if (reserved){
-//
-//        } else {
-//            service.reserveRoom(dto);
-//        }
+    @Transactional
+    public Integer reserveRoom(ReservationRequestDto dto) {
+        LocalDateTime dateIn = formatter.receiveFormattedDate(dto.getDateIn());
+        LocalDateTime dateOut = formatter.receiveFormattedDate(dto.getDateOut());
+        List<Reservation> reservations = repository
+                .findAppropriateReservation(LocalDateTime.now(), dto.getRoomId());
+        Optional<Reservation> conflictReservation = reservations.stream()
+                .filter(res -> dateIn.isAfter(res.getDateIn())
+                        && dateIn.isBefore(res.getDateOut())
+                        || dateOut.isBefore(res.getDateIn())
+                        && dateOut.isAfter(res.getDateOut()))
+                .findFirst();
+        if (conflictReservation.isPresent() && !reservations.isEmpty()) {
+            throw new RuntimeException("This time has already booked");
+        } else {
+            Reservation reservation = requestMapper.map(dto);
+            repository.save(reservation);
+            Integer id = reservation.getId();
+            if (id == null) {
+                throw new RuntimeException("Smth went wrong");
+            } else {
+                return id;
+            }
+        }
     }
 }

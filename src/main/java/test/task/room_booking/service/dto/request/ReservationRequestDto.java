@@ -2,8 +2,6 @@ package test.task.room_booking.service.dto.request;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -11,7 +9,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ReservationRequestDto {
-    private LocalDateTime dateIn;
-    private LocalDateTime dateOut;
+    private String dateIn;
+    private String dateOut;
     private Integer roomId;
+    private Integer employeeId;
+    private String reservationName;
+    private String reservationDescription;
 }

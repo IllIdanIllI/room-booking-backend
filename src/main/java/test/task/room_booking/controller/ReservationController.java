@@ -21,10 +21,9 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity reserveRoom(@RequestBody ReservationRequestDto dto,
-                                  UriComponentsBuilder uriBuilder) {
-        service.reserveRoom(dto);
-//        Integer id = service.addModel(dto);
-        URI uri = uriBuilder.path("/room/{id}").buildAndExpand("").toUri();
+                                      UriComponentsBuilder uriBuilder) {
+        Integer id = service.reserveRoom(dto);
+        URI uri = uriBuilder.path("/reservations/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 }

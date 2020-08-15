@@ -7,6 +7,7 @@ import test.task.room_booking.repository.ReservationRepository;
 import test.task.room_booking.repository.model.Reservation;
 import test.task.room_booking.repository.model.Room;
 import test.task.room_booking.service.dto.response.RoomResponseDto;
+import test.task.room_booking.service.format.FormatHandler;
 import test.task.room_booking.service.mapper.EntityMapper;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,8 @@ public class RoomResponseDtoMapper extends EntityMapper<RoomResponseDto, Room> {
 
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private FormatHandler<LocalDateTime> formatter;
 
     @Override
     public RoomResponseDto map(Room objectToMap) {
@@ -25,7 +28,8 @@ public class RoomResponseDtoMapper extends EntityMapper<RoomResponseDto, Room> {
                 .findAppropriateReservation(LocalDateTime.now(), objectToMap.getId());
         List<Pair<String, String>> dates = reservations.stream()
                 .map(reservation -> Pair
-                        .of(reservation.getDateIn().toString(), reservation.getDateOut().toString()))
+                        .of(formatter.receiveFormattedDateString(reservation.getDateIn()),
+                                formatter.receiveFormattedDateString(reservation.getDateOut())))
                 .collect(Collectors.toList());
         return RoomResponseDto.builder()
                 .number(objectToMap.getNumber())

@@ -26,6 +26,6 @@ public class Room implements Serializable {
     private int number;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "room_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "room_type_id")
     private RoomType type;
 }

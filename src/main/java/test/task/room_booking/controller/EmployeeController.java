@@ -8,6 +8,8 @@ import test.task.room_booking.service.EmployeeService;
 import test.task.room_booking.service.dto.request.EmployeeRequestDto;
 import test.task.room_booking.service.dto.response.EmployeeResponseDto;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 
 @RestController
@@ -17,14 +19,14 @@ public class EmployeeController {
     @Autowired
     private EmployeeService service;
 
-    @GetMapping
-    public ResponseEntity<EmployeeResponseDto> addEmployee(@RequestParam int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeResponseDto> findEmployee(@PathVariable @NotNull Integer id) {
         EmployeeResponseDto employee = service.findModel(id);
         return ResponseEntity.ok(employee);
     }
 
     @PostMapping
-    public ResponseEntity addEmployee(@RequestBody EmployeeRequestDto dto,
+    public ResponseEntity addEmployee(@Valid @RequestBody EmployeeRequestDto dto,
                                       UriComponentsBuilder uriBuilder) {
         Integer id = service.addModel(dto);
         URI uri = uriBuilder.path("/employees/{id}").buildAndExpand(id).toUri();

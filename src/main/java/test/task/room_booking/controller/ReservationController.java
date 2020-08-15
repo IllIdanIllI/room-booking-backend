@@ -7,6 +7,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import test.task.room_booking.service.ReservationService;
 import test.task.room_booking.service.dto.request.ReservationRequestDto;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 
 @RestController
@@ -17,7 +19,7 @@ public class ReservationController {
     private ReservationService service;
 
     @PostMapping
-    public ResponseEntity reserveRoom(@RequestBody ReservationRequestDto dto,
+    public ResponseEntity reserveRoom(@Valid @RequestBody ReservationRequestDto dto,
                                       UriComponentsBuilder uriBuilder) {
         Integer id = service.reserveRoom(dto);
         URI uri = uriBuilder.path("/reservations/{id}").buildAndExpand(id).toUri();
@@ -25,7 +27,7 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}/stop")
-    public ResponseEntity stopReservation(@PathVariable Integer id){
+    public ResponseEntity stopReservation(@PathVariable @NotNull Integer id){
         service.stopReservation(id);
         return ResponseEntity.ok("Reservation has been stopped");
     }

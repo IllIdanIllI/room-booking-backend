@@ -32,6 +32,7 @@ public class RoomResponseDtoMapper extends EntityMapper<RoomResponseDto, Room> {
                                 formatter.receiveFormattedDateString(reservation.getDateOut())))
                 .collect(Collectors.toList());
         return RoomResponseDto.builder()
+                .id(objectToMap.getId())
                 .number(objectToMap.getNumber())
                 .type(objectToMap.getType().getName().get())
                 .dates(dates)

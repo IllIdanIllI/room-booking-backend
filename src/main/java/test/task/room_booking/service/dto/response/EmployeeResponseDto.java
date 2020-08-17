@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class EmployeeResponseDto implements Serializable {
+    private Integer id;
     private String firstName;
     private String lastName;
     private String type;

@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class RoomResponseDto implements Serializable {
+    private Integer id;
     private int number;
     private String type;
     private List<Pair<String, String>> dates;

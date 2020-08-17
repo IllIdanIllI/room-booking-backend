@@ -42,4 +42,11 @@ public class EmployeeController {
         URI uri = uriBuilder.path(EMPLOYEES_URL + PATH_ID_URL).buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PostMapping(SIGN_IN_URL)
+    public ResponseEntity<EmployeeResponseDto> signIn(@Valid @RequestBody EmployeeRequestDto dto) {
+        Integer id = service.addModel(dto);
+        EmployeeResponseDto model = service.findModel(id);
+        return ResponseEntity.ok(model);
+    }
 }

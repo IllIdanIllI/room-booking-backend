@@ -10,6 +10,11 @@ public class EmployeeResponseDtoMapper extends EntityMapper<EmployeeResponseDto,
 
     @Override
     public EmployeeResponseDto map(Employee objectToMap) {
-        return null;
+        return EmployeeResponseDto.builder()
+                .id(objectToMap.getId())
+                .firstName(objectToMap.getFirstName())
+                .lastName(objectToMap.getLastName())
+                .type(objectToMap.getType().get())
+                .build();
     }
 }

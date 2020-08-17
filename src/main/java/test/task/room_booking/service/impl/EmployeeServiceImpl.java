@@ -1,6 +1,9 @@
-package test.task.room_booking.service.mapper;
+package test.task.room_booking.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import test.task.room_booking.repository.EmployeeRepository;
 import test.task.room_booking.repository.model.Employee;
@@ -10,6 +13,7 @@ import test.task.room_booking.service.dto.pagination.PaginationDto;
 import test.task.room_booking.service.dto.request.EmployeeRequestDto;
 import test.task.room_booking.service.dto.response.EmployeeResponseDto;
 import test.task.room_booking.service.exception.NoSuchRecordException;
+import test.task.room_booking.service.mapper.EntityMapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +38,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public PaginationDto<EmployeeResponseDto> findAllModels(int currentPage, int recordAmount) {
-        return null;
+        Pageable pageable = PageRequest.of(currentPage, recordAmount);
+        Page<EmployeeResponseDto> pages = repository.findAll(pageable)
+                .map(room -> responseMapper.map(room));
+        return new PaginationDto<>(pages.getContent(), pages.getTotalPages());
     }
 
     @Override

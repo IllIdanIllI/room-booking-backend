@@ -39,9 +39,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Integer addModel(EmployeeRequestDto dto) {
-        Employee employee = requestMapper.map(dto);
-        repository.save(employee);
-        return Optional.ofNullable(employee.getId()).orElseThrow();
+        Employee newEmployee = requestMapper.map(dto);
+        Employee oldEmployee = repository.findAllByFirstNameAndLastNameAndType(
+                newEmployee.getFirstName(),
+                newEmployee.getLastName(),
+                newEmployee.getType());
+        if (oldEmployee == null) {
+            repository.save(newEmployee);
+            return Optional.ofNullable(newEmployee.getId()).orElseThrow();
+        }
+        return Optional.ofNullable(oldEmployee.getId()).orElseThrow();
     }
 
     @Override

@@ -14,7 +14,6 @@ import test.task.room_booking.service.dto.response.RoomResponseDto;
 import test.task.room_booking.service.exception.NoSuchRecordException;
 import test.task.room_booking.service.mapper.EntityMapper;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -35,10 +34,9 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public PaginationDto<RoomResponseDto> findAllModels(int currentPage, int recordAmount) {
         Pageable pageable = PageRequest.of(currentPage, recordAmount);
-        Page<RoomResponseDto> pages = repository.findAllRoomsWithRelevantDate(LocalDateTime.now(), pageable)
-                .map(roomId -> responseMapper
-                        .map(repository.findById(roomId).orElse(new Room())));
-        return new PaginationDto<>(pages.getContent(),pages.getTotalPages());
+        Page<RoomResponseDto> pages = repository.findAll(pageable)
+                .map(room -> responseMapper.map(room));
+        return new PaginationDto<>(pages.getContent(), pages.getTotalPages());
     }
 
     @Override

@@ -7,6 +7,7 @@ import test.task.room_booking.repository.ReservationRepository;
 import test.task.room_booking.repository.model.Reservation;
 import test.task.room_booking.service.ReservationService;
 import test.task.room_booking.service.dto.request.ReservationRequestDto;
+import test.task.room_booking.service.dto.response.EmployeeReservationResponseDto;
 import test.task.room_booking.service.exception.ReservationProcessingException;
 import test.task.room_booking.service.format.FormatHandler;
 import test.task.room_booking.service.mapper.EntityMapper;
@@ -14,6 +15,7 @@ import test.task.room_booking.service.mapper.EntityMapper;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -24,6 +26,8 @@ public class ReservationServiceImpl implements ReservationService {
     private FormatHandler<LocalDateTime> formatter;
     @Autowired
     private EntityMapper<Reservation, ReservationRequestDto> requestMapper;
+    @Autowired
+    private EntityMapper<EmployeeReservationResponseDto, Reservation> responseMapper;
 
     @Override
     @Transactional
@@ -34,7 +38,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new ReservationProcessingException("Date in is bigger than date out");
         }
         List<Reservation> reservations = repository
-                .findAppropriateReservation(LocalDateTime.now(), dto.getRoomId());
+                .findAppropriateReservations(LocalDateTime.now(), dto.getRoomId());
         Optional<Reservation> conflictReservation = reservations.stream()
                 .filter(res -> dateIn.isAfter(res.getDateIn())
                         && dateIn.isBefore(res.getDateOut())
@@ -73,5 +77,14 @@ public class ReservationServiceImpl implements ReservationService {
                 .orElseThrow(() -> new ReservationProcessingException("Such reservation do not exist"));
         reservation.setDateOut(LocalDateTime.now());
         repository.save(reservation);
+    }
+
+    @Override
+    public List<EmployeeReservationResponseDto> getEmployeeReservations(Integer employeeId) {
+        List<Reservation> employeeReservations = repository
+                .findEmployeeReservations(LocalDateTime.now(), employeeId);
+        return employeeReservations.stream()
+                .map(reservation -> responseMapper.map(reservation))
+                .collect(Collectors.toList());
     }
 }

@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import test.task.room_booking.service.EmployeeService;
+import test.task.room_booking.service.ReservationService;
 import test.task.room_booking.service.dto.request.EmployeeRequestDto;
+import test.task.room_booking.service.dto.response.EmployeeReservationResponseDto;
 import test.task.room_booking.service.dto.response.EmployeeResponseDto;
 
 import javax.validation.Valid;
@@ -22,6 +24,8 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService service;
+    @Autowired
+    private ReservationService reservationService;
 
     @GetMapping(PATH_ID_URL)
     public ResponseEntity<EmployeeResponseDto> findEmployee(@PathVariable @NotNull Integer id) {
@@ -33,6 +37,12 @@ public class EmployeeController {
     public ResponseEntity<List<String>> getEmployeesTypes() {
         List<String> employeesTypes = service.getEmployeesTypes();
         return ResponseEntity.ok(employeesTypes);
+    }
+
+    @GetMapping(PATH_ID_URL + RESERVATIONS_URL)
+    public ResponseEntity<List<EmployeeReservationResponseDto>> getEmployeeReservations(@PathVariable Integer id) {
+        List<EmployeeReservationResponseDto> employeeReservations = reservationService.getEmployeeReservations(id);
+        return ResponseEntity.ok(employeeReservations);
     }
 
     @PostMapping

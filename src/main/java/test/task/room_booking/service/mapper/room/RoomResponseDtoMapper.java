@@ -25,7 +25,7 @@ public class RoomResponseDtoMapper extends EntityMapper<RoomResponseDto, Room> {
     @Override
     public RoomResponseDto map(Room objectToMap) {
         List<Reservation> reservations = reservationRepository
-                .findAppropriateReservation(LocalDateTime.now(), objectToMap.getId());
+                .findAppropriateReservations(LocalDateTime.now(), objectToMap.getId());
         List<Pair<String, String>> dates = reservations.stream()
                 .map(reservation -> Pair
                         .of(formatter.receiveFormattedDateString(reservation.getDateIn()),

@@ -5,7 +5,7 @@
 -- Dumped from database version 11.5
 -- Dumped by pg_dump version 11.5
 
--- Started on 2020-08-15 14:45:08
+-- Started on 2020-08-17 19:03:33
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -273,9 +273,10 @@ ALTER TABLE ONLY public.room_type ALTER COLUMN id SET DEFAULT nextval('public.ro
 -- Data for Name: employee; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.employee (id, first_name, last_name, type) FROM stdin;
-1	first                                             	last                                                        	doctor
-\.
+INSERT INTO public.employee (id, first_name, last_name, type) VALUES (1, 'first                                             ', 'last                                                        ', 'doctor');
+INSERT INTO public.employee (id, first_name, last_name, type) VALUES (4, 'firstNameRef.current.value                        ', 'lastNameRef.current.value                                   ', 'doctor');
+INSERT INTO public.employee (id, first_name, last_name, type) VALUES (5, 'first                                             ', 'Last                                                        ', 'doctor');
+INSERT INTO public.employee (id, first_name, last_name, type) VALUES (6, 'fd                                                ', 'df                                                          ', 'doctor');
 
 
 --
@@ -284,10 +285,20 @@ COPY public.employee (id, first_name, last_name, type) FROM stdin;
 -- Data for Name: reservation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) FROM stdin;
-1	2020-08-14 20:00:00	2020-08-14 21:00:00	1	2	3
-5	2020-08-15 20:00:00	2020-08-15 21:00:00	1	2	3
-\.
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (1, '2020-08-14 20:00:00', '2020-08-14 21:00:00', 1, 2, 3);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (5, '2020-08-15 20:00:00', '2020-08-15 21:00:00', 1, 2, 3);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (6, '2020-08-15 14:40:00', '2020-08-15 15:04:09.856886', 1, 2, 3);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (7, '2020-08-17 15:10:00', '2020-08-17 15:40:00', 1, 2, 4);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (8, '2020-08-17 15:10:00', '2020-08-17 15:40:00', 1, 3, 5);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (9, '2020-08-17 15:10:00', '2020-08-17 15:40:00', 1, 3, 5);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (10, '2020-08-17 15:10:00', '2020-08-17 15:40:00', 1, 3, 5);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (11, '2020-08-17 15:10:00', '2020-08-17 15:40:00', 1, 3, 5);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (13, '2020-08-17 15:10:00', '2020-08-17 15:40:00', 1, 4, 6);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (14, '2020-08-17 16:10:00', '2020-08-17 17:50:00', 1, 4, 6);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (16, '2020-08-17 16:10:00', '2020-08-17 17:50:00', 1, 4, 3);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (17, '2020-08-17 18:02:00', '2020-08-17 19:02:00', 5, 5, 3);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (19, '2020-08-17 19:08:00', '2020-08-17 20:08:00', 5, 7, 4);
+INSERT INTO public.reservation (id, date_in, date_out, employee_id, reservation_reason_id, room_id) VALUES (18, '2020-08-17 18:05:00', '2020-08-17 18:58:02.788383', 5, 6, 4);
 
 
 --
@@ -296,9 +307,12 @@ COPY public.reservation (id, date_in, date_out, employee_id, reservation_reason_
 -- Data for Name: reservation_reason; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.reservation_reason (id, name, description) FROM stdin;
-2	Therapy                                                     	\N
-\.
+INSERT INTO public.reservation_reason (id, name, description) VALUES (2, 'Therapy                                                     ', NULL);
+INSERT INTO public.reservation_reason (id, name, description) VALUES (3, 'Therapyy                                                    ', NULL);
+INSERT INTO public.reservation_reason (id, name, description) VALUES (4, 'Test                                                        ', NULL);
+INSERT INTO public.reservation_reason (id, name, description) VALUES (5, 'fgsdf                                                       ', '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ');
+INSERT INTO public.reservation_reason (id, name, description) VALUES (6, 'fsdfds                                                      ', '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ');
+INSERT INTO public.reservation_reason (id, name, description) VALUES (7, 'sfdaasdas                                                   ', '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ');
 
 
 --
@@ -307,15 +321,14 @@ COPY public.reservation_reason (id, name, description) FROM stdin;
 -- Data for Name: room; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.room (id, number, room_type_id) FROM stdin;
-3	100	2
-4	101	3
-5	102	4
-6	103	5
-7	104	6
-8	105	7
-9	106	8
-\.
+INSERT INTO public.room (id, number, room_type_id) VALUES (3, 100, 2);
+INSERT INTO public.room (id, number, room_type_id) VALUES (4, 101, 3);
+INSERT INTO public.room (id, number, room_type_id) VALUES (5, 102, 4);
+INSERT INTO public.room (id, number, room_type_id) VALUES (6, 103, 5);
+INSERT INTO public.room (id, number, room_type_id) VALUES (7, 104, 6);
+INSERT INTO public.room (id, number, room_type_id) VALUES (8, 105, 7);
+INSERT INTO public.room (id, number, room_type_id) VALUES (9, 106, 8);
+INSERT INTO public.room (id, number, room_type_id) VALUES (10, 200, 9);
 
 
 --
@@ -324,15 +337,14 @@ COPY public.room (id, number, room_type_id) FROM stdin;
 -- Data for Name: room_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.room_type (id, name) FROM stdin;
-2	Treatment room
-3	Treatment room
-4	Treatment room
-5	Intensive care room
-6	Intensive care room
-7	Reception room
-8	Reception room
-\.
+INSERT INTO public.room_type (id, name) VALUES (2, 'Treatment room');
+INSERT INTO public.room_type (id, name) VALUES (3, 'Treatment room');
+INSERT INTO public.room_type (id, name) VALUES (4, 'Treatment room');
+INSERT INTO public.room_type (id, name) VALUES (5, 'Intensive care room');
+INSERT INTO public.room_type (id, name) VALUES (6, 'Intensive care room');
+INSERT INTO public.room_type (id, name) VALUES (7, 'Reception room');
+INSERT INTO public.room_type (id, name) VALUES (8, 'Reception room');
+INSERT INTO public.room_type (id, name) VALUES (9, 'Intensive care room');
 
 
 --
@@ -341,7 +353,7 @@ COPY public.room_type (id, name) FROM stdin;
 -- Name: employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.employee_id_seq', 3, true);
+SELECT pg_catalog.setval('public.employee_id_seq', 6, true);
 
 
 --
@@ -350,7 +362,7 @@ SELECT pg_catalog.setval('public.employee_id_seq', 3, true);
 -- Name: reservation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.reservation_id_seq', 5, true);
+SELECT pg_catalog.setval('public.reservation_id_seq', 19, true);
 
 
 --
@@ -359,7 +371,7 @@ SELECT pg_catalog.setval('public.reservation_id_seq', 5, true);
 -- Name: reservation_reason_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.reservation_reason_id_seq', 2, true);
+SELECT pg_catalog.setval('public.reservation_reason_id_seq', 7, true);
 
 
 --
@@ -368,7 +380,7 @@ SELECT pg_catalog.setval('public.reservation_reason_id_seq', 2, true);
 -- Name: room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.room_id_seq', 9, true);
+SELECT pg_catalog.setval('public.room_id_seq', 10, true);
 
 
 --
@@ -377,7 +389,7 @@ SELECT pg_catalog.setval('public.room_id_seq', 9, true);
 -- Name: room_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.room_type_id_seq', 8, true);
+SELECT pg_catalog.setval('public.room_type_id_seq', 9, true);
 
 
 --
@@ -461,7 +473,7 @@ ALTER TABLE ONLY public.room
     ADD CONSTRAINT room_type_id FOREIGN KEY (room_type_id) REFERENCES public.room_type(id);
 
 
--- Completed on 2020-08-15 14:45:09
+-- Completed on 2020-08-17 19:03:34
 
 --
 -- PostgreSQL database dump complete

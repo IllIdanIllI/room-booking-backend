@@ -23,6 +23,8 @@ public class EmployeeReservationResponseDtoMapper extends EntityMapper<EmployeeR
         return EmployeeReservationResponseDto.builder()
                 .id(objectToMap.getEmployee().getId())
                 .roomNumber(objectToMap.getRoom().getNumber())
+                .reason(objectToMap.getReservationReason().getName())
+                .description(objectToMap.getReservationReason().getDescription())
                 .dates(dates)
                 .build();
     }

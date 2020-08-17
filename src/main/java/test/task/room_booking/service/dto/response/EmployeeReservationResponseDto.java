@@ -14,5 +14,7 @@ import java.io.Serializable;
 public class EmployeeReservationResponseDto implements Serializable {
     private Integer id;
     private int roomNumber;
+    private String reason;
+    private String description;
     private Pair<String, String> dates;
 }

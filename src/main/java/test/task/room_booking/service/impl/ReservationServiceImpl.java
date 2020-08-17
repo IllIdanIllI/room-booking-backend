@@ -30,7 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Integer reserveRoom(ReservationRequestDto dto) {
         LocalDateTime dateIn = formatter.receiveFormattedDate(dto.getDateIn());
         LocalDateTime dateOut = formatter.receiveFormattedDate(dto.getDateOut());
-        if (dateIn.isAfter(dateOut)){
+        if (dateIn.isAfter(dateOut)) {
             throw new ReservationProcessingException("Date in is bigger than date out");
         }
         List<Reservation> reservations = repository
@@ -39,7 +39,9 @@ public class ReservationServiceImpl implements ReservationService {
                 .filter(res -> dateIn.isAfter(res.getDateIn())
                         && dateIn.isBefore(res.getDateOut())
                         || dateOut.isBefore(res.getDateIn())
-                        && dateOut.isAfter(res.getDateOut()))
+                        && dateOut.isAfter(res.getDateOut())
+                        || res.getDateIn().isBefore(dateIn)
+                        && res.getDateOut().isAfter(dateOut))
                 .findFirst();
         if (conflictReservation.isPresent() && !reservations.isEmpty()) {
             throw new ReservationProcessingException("This time has already booked");

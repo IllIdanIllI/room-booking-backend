@@ -15,6 +15,7 @@ import static test.task.room_booking.constant.UrlConstant.*;
 
 @RestController
 @RequestMapping(RESERVATIONS_URL)
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReservationController {
 
 

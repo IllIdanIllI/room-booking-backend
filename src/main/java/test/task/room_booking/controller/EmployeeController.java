@@ -17,6 +17,7 @@ import static test.task.room_booking.constant.UrlConstant.PATH_ID_URL;
 
 @RestController
 @RequestMapping(EMPLOYEES_URL)
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmployeeController {
 
     @Autowired

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import test.task.room_booking.repository.RoomRepository;
 import test.task.room_booking.repository.model.Room;
 import test.task.room_booking.service.RoomService;
+import test.task.room_booking.service.dto.pagination.PaginationDto;
 import test.task.room_booking.service.dto.request.RoomRequestDto;
 import test.task.room_booking.service.dto.response.RoomResponseDto;
 import test.task.room_booking.service.exception.NoSuchRecordException;
@@ -32,12 +33,12 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Page<RoomResponseDto> findAllModels(int currentPage, int recordAmount) {
+    public PaginationDto<RoomResponseDto> findAllModels(int currentPage, int recordAmount) {
         Pageable pageable = PageRequest.of(currentPage, recordAmount);
-        Page<Integer> allRoomsWithRelevantDate = repository.findAllRoomsWithRelevantDate(LocalDateTime.now(), pageable);
-        return repository.findAllRoomsWithRelevantDate(LocalDateTime.now(), pageable)
+        Page<RoomResponseDto> pages = repository.findAllRoomsWithRelevantDate(LocalDateTime.now(), pageable)
                 .map(roomId -> responseMapper
                         .map(repository.findById(roomId).orElse(new Room())));
+        return new PaginationDto<>(pages.getContent(),pages.getTotalPages());
     }
 
     @Override

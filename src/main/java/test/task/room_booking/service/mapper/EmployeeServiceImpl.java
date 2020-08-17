@@ -1,16 +1,20 @@
 package test.task.room_booking.service.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import test.task.room_booking.repository.EmployeeRepository;
 import test.task.room_booking.repository.model.Employee;
+import test.task.room_booking.repository.model.type.EmployeeType;
 import test.task.room_booking.service.EmployeeService;
+import test.task.room_booking.service.dto.pagination.PaginationDto;
 import test.task.room_booking.service.dto.request.EmployeeRequestDto;
 import test.task.room_booking.service.dto.response.EmployeeResponseDto;
 import test.task.room_booking.service.exception.NoSuchRecordException;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -29,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Page<EmployeeResponseDto> findAllModels(int currentPage, int recordAmount) {
+    public PaginationDto<EmployeeResponseDto> findAllModels(int currentPage, int recordAmount) {
         return null;
     }
 
@@ -38,5 +42,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = requestMapper.map(dto);
         repository.save(employee);
         return Optional.ofNullable(employee.getId()).orElseThrow();
+    }
+
+    @Override
+    public List<String> getEmployeesTypes() {
+        return Arrays.stream(EmployeeType.values())
+                .map(EmployeeType::get)
+                .collect(Collectors.toList());
     }
 }

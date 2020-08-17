@@ -7,6 +7,7 @@ public final class UrlConstant {
     public static final String PATH_ID_URL = "/{id}";
     public static final String ROOMS_URL = "/rooms";
     public static final String STOP_URL = "/stop";
+    public static final String TYPES_URL = "/types";
 
     private UrlConstant(){
     }

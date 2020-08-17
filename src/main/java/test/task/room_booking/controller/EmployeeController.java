@@ -11,9 +11,9 @@ import test.task.room_booking.service.dto.response.EmployeeResponseDto;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.util.List;
 
-import static test.task.room_booking.constant.UrlConstant.EMPLOYEES_URL;
-import static test.task.room_booking.constant.UrlConstant.PATH_ID_URL;
+import static test.task.room_booking.constant.UrlConstant.*;
 
 @RestController
 @RequestMapping(EMPLOYEES_URL)
@@ -27,6 +27,12 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponseDto> findEmployee(@PathVariable @NotNull Integer id) {
         EmployeeResponseDto employee = service.findModel(id);
         return ResponseEntity.ok(employee);
+    }
+
+    @GetMapping(TYPES_URL)
+    public ResponseEntity<List<String>> getEmployeesTypes() {
+        List<String> employeesTypes = service.getEmployeesTypes();
+        return ResponseEntity.ok(employeesTypes);
     }
 
     @PostMapping

@@ -34,8 +34,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Page<RoomResponseDto> findAllModels(int currentPage, int recordAmount) {
         Pageable pageable = PageRequest.of(currentPage, recordAmount);
+        Page<Integer> allRoomsWithRelevantDate = repository.findAllRoomsWithRelevantDate(LocalDateTime.now(), pageable);
         return repository.findAllRoomsWithRelevantDate(LocalDateTime.now(), pageable)
-                .map(room -> responseMapper.map(room));
+                .map(roomId -> responseMapper
+                        .map(repository.findById(roomId).orElse(new Room())));
     }
 
     @Override

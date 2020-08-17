@@ -41,7 +41,11 @@ public class ReservationServiceImpl implements ReservationService {
                         || dateOut.isBefore(res.getDateIn())
                         && dateOut.isAfter(res.getDateOut())
                         || res.getDateIn().isBefore(dateIn)
-                        && res.getDateOut().isAfter(dateOut))
+                        && res.getDateOut().isAfter(dateOut)
+                        || dateIn.isEqual(res.getDateIn())
+                        || dateIn.isEqual(res.getDateOut())
+                        || dateOut.isEqual(res.getDateIn())
+                        || dateOut.isEqual(res.getDateOut()))
                 .findFirst();
         if (conflictReservation.isPresent() && !reservations.isEmpty()) {
             throw new ReservationProcessingException("This time has already booked");

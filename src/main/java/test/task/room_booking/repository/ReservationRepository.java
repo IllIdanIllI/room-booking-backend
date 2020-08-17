@@ -21,7 +21,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     @Transactional
     @Query(value = "SELECT * FROM reservation r " +
-            "WHERE r.date_in > ?1 OR  r.date_out > ?1 AND r.room_id = ?2", nativeQuery = true)
+            "WHERE r.date_out > ?1 AND r.room_id = ?2", nativeQuery = true)
     List<Reservation> findAppropriateReservation(LocalDateTime currentDate, Integer roomId);
 
 }
